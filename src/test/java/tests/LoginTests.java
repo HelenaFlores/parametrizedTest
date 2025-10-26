@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -20,6 +21,11 @@ public class LoginTests extends TestBase {
         loginPage.openPage();
     }
 
+    @AfterEach
+    void afterEach() {
+        Selenide.closeWebDriver();
+    }
+
     @CsvFileSource(resources = "/test_data/authorizationWithAllFilledFieldsTest.csv")
     @ParameterizedTest(name = "Авторизация с верно заполненнным логином {0} и паролем {1}")
     @Tag("SMOUK")
@@ -32,7 +38,7 @@ public class LoginTests extends TestBase {
                 .getLoginUserPage().shouldHave(text(login));
 
         loginPage.getLogoutButton().isEnabled();
-        loginPage.logoutButtonClick();
+     //   loginPage.logoutButtonClick();
     }
 
     @CsvSource(value = {
